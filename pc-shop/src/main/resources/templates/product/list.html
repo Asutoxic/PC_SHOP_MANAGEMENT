@@ -215,7 +215,7 @@
                                        <td>
                                            <img src="${item.image}" width="120px" height="auto"/>
                                        </td>
-                                       <td >${item.price} VNĐ</td>
+                                       <td >${formatCash(item.price)} VNĐ</td>
 
                                        <td>${item.category.categoryName}</td>
                                        <td>
@@ -279,7 +279,7 @@
                                        <td>
                                            <img src="${item.image}" width="120px" height="auto"/>
                                        </td>
-                                       <td>${item.price} VNĐ</td>
+                                       <td>${formatCash(item.price)} VNĐ</td>
                                        <td>${item.category.categoryName}</td>
                                        <td>
                                              <button data-id = "${item.id}" type="button" class="btn btn-outline-secondary edit"> Edit </button>
@@ -359,7 +359,7 @@
                                        <td>
                                            <img src="${item.image}" width="120px" height="auto"/>
                                        </td>
-                                      <td>${item.price} VNĐ</td>
+                                      <td>${formatCash(item.price)} VNĐ</td>
                                        <td>${item.category.categoryName}</td>
                                        <td>
                                              <button data-id = "${item.id}" type="button" class="btn btn-outline-secondary edit"> Edit </button>
@@ -506,6 +506,12 @@
         })
     }
 
+    function formatCash(money) {
+        let str = money.toString();
+        return str.split('').reverse().reduce((prev, next, index) => {
+            return ((index % 3) ? next : (next + ',')) + prev;
+        });
+    }
 
     function handleBtn() {
         handleEditBtn();
@@ -583,7 +589,7 @@
                                        <td>
                                            <img src="${item.image}" width="120px" height="auto"/>
                                        </td>
-                                        <td>${item.price} VNĐ</td>
+                                        <td>${formatCash(item.price)} VNĐ</td>
                                        <td>${item.category.categoryName}</td>
                                        <td>
                                              <button data-id = "${item.id}" type="button" class="btn btn-outline-secondary edit"> Edit </button>

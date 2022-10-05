@@ -11,6 +11,23 @@
     <link href="/assets/libs/datatables/select.bootstrap4.min.css" rel="stylesheet" type="text/css">
 
     <th:block th:replace="/layout/header :: header-p2"></th:block>
+
+    <style>
+        .page-title-box img{
+            width: 240px;
+            height: 320px;
+        }
+
+        .page-title-box img:hover{
+            width: 280px;
+            height: 360px;
+        }
+
+        /*.page-title-box {*/
+        /*    border: 2px solid black;*/
+        /*    box-shadow: #c6c6c6;*/
+        /*}*/
+    </style>
 </head>
 
 <body>
@@ -22,21 +39,14 @@
     <!-- Topbar Start -->
     <th:block th:replace="/layout/topbar"></th:block>
     <!-- end Topbar --> <!-- ========== Left Sidebar Start ========== -->
-
     <div class="left-side-menu">
-
         <div class="slimscroll-menu">
-
-            <!--- Sidemenu -->
             <div id="sidebar-menu">
+                <th:block th:replace="/layout/business-left"></th:block>
             </div>
-            <!-- End Sidebar -->
-
             <div class="clearfix"></div>
-
         </div>
         <!-- Sidebar -left -->
-
     </div>
     <!-- Left Sidebar End -->
 
@@ -58,6 +68,10 @@
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row" id="renderProduct">
+
                 </div>
                 <!-- end page title -->
 
@@ -85,3 +99,138 @@
 <th:block th:replace="/layout/script"></th:block>
 </body>
 </html>
+<script src="/assets/js/jQuery/jquery-3.6.0.min.js"></script>
+<script src="/assets/js/apps.js"></script>
+
+<script>
+
+    let product = new Product();
+    let category = new Category();
+
+    function loadProducts() {
+        return $.ajax({
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products"
+        })
+            .done((data) => {
+                $.each(data, (i, item) => {
+                    let str = `
+                        <div class="col-3">
+                            <div class="page-title-box text-center">
+                                <img src="${item.image}" alt="">
+                                <h4>${item.name} </h4>
+                                <p>Đơn giá: ${formatCash(item.price)} VNĐ</p>
+                                <p>Danh mục: ${item.category.categoryName}</p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        `;
+                    $("#renderProduct").prepend(str);
+                })
+                showCategory();
+            }).fail((jqXHR) => {
+
+            })
+    }
+
+    loadProducts();
+
+    function showCategory() {
+
+        $.ajax({
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/categories"
+        }).done((data) => {
+
+            $.each(data, (i, item) => {
+                let str = `
+                        <li>
+                          <a href="#" class="waves-effect" onclick="changeCategory(${item.id})">
+                            <span>${item.categoryName}</span>
+                          </a>
+                        </li>
+                    `;
+                $("#side-menu").prepend(str);
+            })
+        })
+            .fail((err) => {
+                alert("Load category fail!");
+            })
+    }
+
+    function formatCash(money) {
+        let str = money.toString();
+        return str.split('').reverse().reduce((prev, next, index) => {
+            return ((index % 3) ? next : (next + ',')) + prev;
+        });
+    }
+
+    function changeCategory(id) {
+        $("#renderProduct").empty();
+
+        return $.ajax({
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products/category/" + id
+        })
+            .done((data) => {
+                $.each(data, (i, item) => {
+                    let str = `
+                        <div class="col-3">
+                            <div class="page-title-box text-center">
+                                <img src="${item.image}" alt="">
+                                <h4>${item.name} </h4>
+                                <p>Đơn giá: ${formatCash(item.price)} VNĐ</p>
+                                <p>Danh mục: ${item.category.categoryName}</p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        `;
+                    $("#renderProduct").prepend(str);
+                })
+            }).fail((jqXHR) => {
+                console.log(jqXHR)
+            })
+    }
+
+    function getAll() {
+        $("#renderProduct").empty();
+        return $.ajax({
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/products"
+        })
+            .done((data) => {
+                $.each(data, (i, item) => {
+                    let str = `
+                        <div class="col-3">
+                            <div class="page-title-box text-center">
+                                <img src="${item.image}" alt="">
+                                <h4>${item.name} </h4>
+                                <p>Đơn giá: ${formatCash(item.price)} VNĐ</p>
+                                <p>Danh mục: ${item.category.categoryName}</p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        `;
+                    $("#renderProduct").prepend(str);
+                })
+            }).fail((jqXHR) => {
+
+            })
+    }
+</script>

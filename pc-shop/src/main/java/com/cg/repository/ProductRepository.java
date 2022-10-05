@@ -31,6 +31,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "FROM Product AS p WHERE p.id = :id")
     Optional<ProductDTO> findProductDTOById(@Param("id") Long id);
 
+    @Query("SELECT NEW com.cg.model.dto.ProductDTO (" +
+            "p.id, " +
+            "p.name, " +
+            "p.image, " +
+            "p.price, " +
+            "p.category) " +
+            "FROM Product AS p WHERE p.deleted = false AND p.category.id = :categoryId")
+    List<ProductDTO> findProductDTOByCategory(@Param("categoryId") Long categoryId);
+
     @Modifying
     @Query("UPDATE Product AS p SET p.deleted = true WHERE p.id = :id")
     void deleteProductById(@Param("id") Long id);

@@ -128,4 +128,13 @@ public class ProductRestController {
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<?> getProductByCategory(@PathVariable Long id) {
+        List<ProductDTO> productDTO = productService.findProductDTOByCategory(id);
+
+        if (productDTO.isEmpty()) {
+            return new ResponseEntity<>("Không có dữ liệu", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
 }

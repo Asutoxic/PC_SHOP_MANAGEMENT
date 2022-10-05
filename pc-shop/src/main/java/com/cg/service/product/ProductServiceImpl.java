@@ -46,6 +46,12 @@ public class ProductServiceImpl implements IProductService{
     public List<ProductDTO> findProductByValue(String query) {
         return productRepository.findProductValue(query);
     }
+
+    @Override
+    public List<ProductDTO> findProductDTOByCategory(Long categoryId) {
+        return productRepository.findProductDTOByCategory(categoryId);
+    }
+
     @Override
     public Product save(Product product) {
         return (Product) productRepository.save(product);
