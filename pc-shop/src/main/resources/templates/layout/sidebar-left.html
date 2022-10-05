@@ -1,0 +1,30 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="sidebar-left">
+    <ul class="metismenu" id="side-menu">
+
+        <li>
+            <a href="/products" class="waves-effect">
+                <i class="fas fa-folder-open"></i>
+                <span>Quản Lý Sản Phẩm</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/users" class="waves-effect">
+                <i class="fas fa-user"></i>
+                <span>Quản Lý Người Dùng</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/users/admins" class="waves-effect">
+                <i class="fas fa-user-shield"></i>
+                <span>Danh Sách Quản Trị Viên</span>
+            </a>
+        </li>
+
+    </ul>
+</th:block>
+
+</html>
