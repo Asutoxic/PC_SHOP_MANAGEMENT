@@ -18,6 +18,7 @@ public class BusinessController {
 
     @Autowired
     IUserService userService;
+    private String username;
 
     private String getPrincipalName() {
 

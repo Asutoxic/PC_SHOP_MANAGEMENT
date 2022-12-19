@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface    CategoryRepository extends JpaRepository<Category, Long> {
     Category findCategoryByCategoryName(String name);
 
     @Query("SELECT NEW com.cg.model.dto.CategoryDTO(" +

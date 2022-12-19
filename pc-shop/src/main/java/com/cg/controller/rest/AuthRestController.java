@@ -35,7 +35,7 @@ import java.util.Optional;
 public class AuthRestController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+                  private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtService jwtService;

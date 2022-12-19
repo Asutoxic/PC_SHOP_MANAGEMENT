@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Dashboard</title>
+    <title>PC SHOP</title>
     <th:block th:replace="/layout/header :: header-p1"></th:block>
 
     <link href="/assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
@@ -158,11 +158,11 @@
                           </a>
                         </li>
                     `;
-                $("#side-menu").prepend(str);
+                $("#side-menu").append(str);
             })
         })
             .fail((err) => {
-                alert("Load category fail!");
+                alert("Tải Danh Mục Lỗi!");
             })
     }
 
